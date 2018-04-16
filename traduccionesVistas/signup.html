@@ -1,0 +1,61 @@
+{% extends "base.html" %} 
+
+{% block titulo %} Identificar usuario {% endblock %} 
+
+{% block contenido_principal %}
+
+  <h2>Identificación de usuario</h2>
+  <form class="form-horizontal" method="post" action="/registrarse" >
+    <!-- Nombre -->
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="nombre"
+          text="Nombre"></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="nombre"
+            placeholder="Ejemplo: Ash" required="true" /> <span
+            class="text-danger" 
+            id="nombreMal" />
+        </div>
+      </div>
+      <!-- Apellidos -->
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="apellidos"
+          text="Apellidos"></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="apellidos"
+            placeholder="Ketchup y Mayonesa" required="true" /> <span
+            class="text-danger" id="apellidosMal" />
+        </div>
+      </div>
+      <!-- Email -->
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" name="email" id="email"
+            placeholder="email@email.com" required="true" />
+      </div>
+    </div>
+    <!-- Password -->
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="password">Contraseña:</label>
+      <div class="col-sm-10">          
+        <input type="password"  class="form-control" name="password" 
+        	placeholder="Contraseña" required="true" id="password"/>
+      </div>
+    </div>
+    <!-- Repite password -->
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="password">Repite contraseña:</label>
+      <div class="col-sm-10">          
+        <input type="password"  class="form-control" name="password" 
+          placeholder="Repite contraseña" required="true" id="Repitepassword"/>
+      </div>
+    </div>
+    <!-- Boton aceptar -->
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
