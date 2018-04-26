@@ -3,29 +3,28 @@
 {% block titulo %} Lista de usuarios {% endblock %} 
 
 {% block contenido_principal %}
-
+<!--  Se le pasa {usuario: usuarioSesion, usuarios : usuarios}-->
 	<div class="container">
 		<h2>
 			<div class="container">
-				<p  id="bienvenidaUser">Bienvenido  {{ usuario.nombre }}</p>
+				<p  id="bienvenidaUser">Bienvenido  {{ usuarioSesion.nombre }}</p>
 			</div>
 		</h2>
-		<h3 id="usuariosTitle" th:text='#{text.usuariosDisponibles}'>Usuarios</h3>
 
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
 				<input id="search" name="searchText" type="text"
 					class="form-control" size="50"
-					th:placeholder="#{placeholder.buscarUsuario}">
+					placeholder="Pepe el del huevo repe">
 			</div>
-			<button type="submit" class="btn btn-default" id="searchButton" th:text="#{bt.buscar}">Buscar</button>
+			<button type="submit" class="btn btn-default" id="searchButton" text="#{bt.buscar}">Buscar</button>
 		</form>
 		
 		
 		<p id="demo"></p>
-		<p th:text="#{usuariosSistema.field}" id="parrafoUsuariosSistema">Los usuarios que actualmente
+		<p text="#{usuariosSistema.field}" id="parrafoUsuariosSistema">Los usuarios que actualmente
 			figuran en el sistema son los siguientes:</p>
-		<div class="table-responsive">
+		<!--<div class="table-responsive">
 			<table class="table table-hover" id="tablaUsuarios">
 				<thead>
 					<tr>
@@ -42,7 +41,7 @@
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.lastName}">Apellidos del usuario</td>
 
-						<!--  OJO AQUI  && existePeticion == false -->
+						<!--  OJO AQUI  && existePeticion == false ->
 						<td th:if="${user.role == 'ROLE_USER'}"><a
 							th:id="'btn' + ${user.email}"
 							th:href="'/peticion/enviarPeticion?emailRecibe='+ ${user.email}"
@@ -51,11 +50,31 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<footer th:replace="fragments/pagination" />
+		</div> -->
+
+		<h2>Usuarios: </h2>
+
+		<div class="row">
+			<!-- http://librosweb.es/libro/bootstrap_3/capitulo_2/tipos_de_rejillas.html -->
+			<!-- Inicio del Bloque canción -->
+			{% for user in usuarios %}
+		<table class="table table-hover" id="tablaUsuarios">
+			<tbody>
+			<tr id="fila">
+				<td >{{ user.nombre }}</td>
+				<td >{{ user.apellidos }}</td>
+				<td >{{ user.email }}</td>
+
+			</tr>
+			</tbody>
+		</table>
+		{% endfor %}
+			</div>
+
+		<footer replace="fragments/pagination" />
 	</div>
 
-	<footer th:replace="fragments/footer" />
+	<footer replace="fragments/footer" />
 
 </body>
 </html>

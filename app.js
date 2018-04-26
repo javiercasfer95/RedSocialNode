@@ -102,7 +102,7 @@ app.use(express.static('public'));
 
 //Variables
 app.set('port', 8081);
-app.set('db', 'mongodb://admin:sdi2018@ds111885.mlab.com:11885/tiendamusica');
+app.set('db', 'mongodb://admin:sdi2018@ds055742.mlab.com:55742/redsocialnatornode');
 app.set('clave', 'abcdefg');
 app.set('crypto', crypto);
 

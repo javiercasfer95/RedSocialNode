@@ -1,0 +1,66 @@
+{% extends "base.html" %} 
+
+{% block titulo %} Lista de usuarios {% endblock %} 
+
+{% block contenido_principal %}
+
+	<div class="container">
+		<h2>
+			<div class="container">
+				<p  id="bienvenidaUser">Bienvenido  {{ usuario.nombre }}</p>
+			</div>
+		</h2>
+		<h3 id="usuariosTitle" th:text='#{text.usuariosDisponibles}'>Usuarios</h3>
+
+		<form class="navbar-form" action="/user/list">
+			<div class="form-group">
+				<input id="search" name="searchText" type="text"
+					class="form-control" size="50"
+					th:placeholder="#{placeholder.buscarUsuario}">
+			</div>
+			<button type="submit" class="btn btn-default" id="searchButton" th:text="#{bt.buscar}">Buscar</button>
+		</form>
+		
+		
+		<p id="demo"></p>
+		<p th:text="#{usuariosSistema.field}" id="parrafoUsuariosSistema">Los usuarios que actualmente
+			figuran en el sistema son los siguientes:</p>
+		<div class="table-responsive">
+			<table class="table table-hover" id="tablaUsuarios">
+				<thead>
+					<tr>
+						<th th:text='#{email.field}'>Email</th>
+						<th th:text='#{nombre.field}'>Nombre</th>
+						<th th:text='#{apellidos.field}'>Apellidos</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:id="'filaDe' + ${user.email}" th:each="user : ${usersList}">
+						<td th:text="${user.email}">ejemplo@correo.es</td>
+						<td th:text="${user.name}">Nombre del usuario</td>
+						<td th:text="${user.lastName}">Apellidos del usuario</td>
+
+						<!--  OJO AQUI  && existePeticion == false -->
+						<td th:if="${user.role == 'ROLE_USER'}"><a
+							th:id="'btn' + ${user.email}"
+							th:href="'/peticion/enviarPeticion?emailRecibe='+ ${user.email}"
+							th:text="'Agregar ' + ${user.name}" class="btn btn-primary"
+							th:if="${!usuariosConRelaciones.contains(user.email)}" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+
+
+
+		<footer th:replace="fragments/pagination" />
+	</div>
+
+	<footer th:replace="fragments/footer" />
+
+</body>
+</html>
