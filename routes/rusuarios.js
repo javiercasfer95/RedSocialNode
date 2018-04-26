@@ -7,9 +7,10 @@ module.exports = function (app, swig, gestorBD) {
         var respuesta = swig.renderFile('views/signup.html', {});
         res.send(respuesta);
     });
-    app.post('/registrarse', function (req, res) {
+    app.post('/signup', function (req, res) {
         var email = req.body.email;
         //Comprobar que el email no existe en el sistema
+        var criterio = {}; //Obtendria todos los usuarios (?)
         gestorBD.obtenerUsuarios(criterio, function (usuarios) {
             if (usuarios == null || usuarios.length == 0) {
 
