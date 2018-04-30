@@ -34,7 +34,7 @@ module.exports = function (app, swig, gestorBD) {
                         res.redirect("/registrarse?mensaje=Error al registrar usuario")
                     } else {
                         //res.send('Usuario Insertado ' + id);
-                        //res.redirect("/tienda");
+                        //res.redirect("/home");
                         // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
                         res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
                     }
@@ -51,10 +51,19 @@ module.exports = function (app, swig, gestorBD) {
         var respuesta = swig.renderFile('views/bidentificacion.html', {});
         res.send(respuesta);
     });
+
+
     app.post("/identificarse", function (req, res) {
+        console.log("User name:" + req.body.email);
+        console.log("User passwrod: " + req.body.password);
         var seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(req.body.password).digest('hex');
 
-        var criterio = {email: req.body.email, password: seguro}
+        var criterio = {email: req.body.email, password: seguro};
+
+            console.log=("Criterio de busqueda: "+ criterio.email);
+
+
+
 
         gestorBD.obtenerUsuarios(criterio, function (usuarios) {
             if (usuarios == null || usuarios.length == 0) {
@@ -66,7 +75,7 @@ module.exports = function (app, swig, gestorBD) {
                 //res.send("identificado");
 
                 //Mejoramos la respuesta de la identificacion
-                res.redirect("/tienda" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
+                res.redirect("/home" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
 
             }
 

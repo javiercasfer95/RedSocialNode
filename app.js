@@ -55,7 +55,7 @@ routerUsuarioAutor.use(function (req, res, next) {
         if (canciones[0].autor == req.session.usuario) {
             next();
         } else {
-            res.redirect("/tienda");
+            res.redirect("/home");
         }
     })
 });
@@ -74,7 +74,7 @@ routerAudios.use(function (req, res, next) {
         if (canciones[0].autor == req.session.usuario) {
             next();
         } else {
-            //res.redirect("/tienda");
+            //res.redirect("/home");
             var criterio = {
                 usuario: req.session.usuario,
                 cancionId: mongo.ObjectID(idCancion)
@@ -83,7 +83,7 @@ routerAudios.use(function (req, res, next) {
                 if (compras != null && compras.length > 0) {
                     next();
                 } else {
-                    res.redirect("/tienda");
+                    res.redirect("/home");
                 }
             });
         }
@@ -112,7 +112,7 @@ require("./routes/rcanciones.js")(app, swig, gestorBD); // (app, param1, param2,
 
 //Ruta por defecto de la aplicacion
 app.get('/', function (req, res) {
-    res.redirect('/tienda');
+    res.redirect('/home');
 });
 
 app.use(function (err, req, res, next) {
