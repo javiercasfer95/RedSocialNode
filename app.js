@@ -27,7 +27,7 @@ app.use(fileUpload());
 // routerUsuarioSession
 var routerUsuarioSession = express.Router();
 routerUsuarioSession.use(function (req, res, next) {
-    console.log("routerUsuarioSession");
+    //console.log("routerUsuarioSession")
     if (req.session.usuario) {
         // dejamos correr la petición
         next();
@@ -38,10 +38,13 @@ routerUsuarioSession.use(function (req, res, next) {
 });
 
 //Aplicar routerUsuarioSession
+app.use("/listUsers", routerUsuarioSession);
+app.use("/peticion*", routerUsuarioSession);
 app.use("/canciones/agregar", routerUsuarioSession);
 app.use("/publicaciones", routerUsuarioSession);
 app.use("/cancion/comprar", routerUsuarioSession);
 app.use("/compras", routerUsuarioSession);
+
 
 
 //routerUsuarioAutor
@@ -107,8 +110,11 @@ app.set('clave', 'abcdefg');
 app.set('crypto', crypto);
 
 //Rutas/controladores por lógica
+require("./routes/rhome.js")(app, swig); // (app, param1, param2, etc.)
 require("./routes/rusuarios.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
+require("./routes/rpeticiones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/rcanciones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
+
 
 //Ruta por defecto de la aplicacion
 app.get('/', function (req, res) {
@@ -118,10 +124,12 @@ app.get('/', function (req, res) {
 app.use(function (err, req, res, next) {
     console.log("Error producido: " + err); //we log the error in our db
     if (!res.headersSent) {
+        //console.log("Error producido: " + err.toString());
         res.status(400);
         res.send("Recurso no disponible");
     }
 });
+
 //lanzar el servidor
 app.listen(app.get('port'), function () {
     console.log("Servidor activo");

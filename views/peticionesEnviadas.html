@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de usuarios {% endblock %}
+
+{% block contenido_principal %}
+<h2>
+    <div class="container">
+        <p  id="bienvenidaUser">Tus peticiones enviadas,  {{ usuario }}</p>
+    </div>
+</h2>
+
+<h2>Peticiones: </h2>
+
+<div class="row">
+    <!-- http://librosweb.es/libro/bootstrap_3/capitulo_2/tipos_de_rejillas.html -->
+    <!-- Inicio del Bloque canción -->
+
+    <table class="table table-hover" id="tablaUsuarios">
+        <thead>
+        <tr>
+            <th>Receptor</th>
+            <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for peticion in peticiones %}
+        <tr id="fila">
+            <td >{{ peticion.receptor }}</td>
+            {% if peticion.aceptada %}
+            <td><a id="'info{{user.email}}"
+                   class="btn btn-success">Aceptada</a>
+            </td>
+            {% else %}
+            <td><a id="'info{{user.email}}"
+                   class="btn btn-info">Aún no aceptada</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Paginación mostrar la actual y 2 anteriores y dos siguientes -->
+<div class="row text-center">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+    </ul>
+</div>
+
+</div>
+{% endblock %}

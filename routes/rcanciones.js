@@ -1,13 +1,5 @@
 module.exports = function (app, swig, gestorBD) {
-     app.get("/home", function (req, res) {
 
-                    var respuesta = swig.renderFile('views/home.html');
-
-                    res.send(respuesta);
-
-
-
-        });
 
 
 

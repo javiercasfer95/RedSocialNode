@@ -3,6 +3,24 @@
 {% block titulo %} Lista de usuarios {% endblock %} 
 
 {% block contenido_principal %}
+<!-- Búsqueda -->
+<div class="row">
+	<div id="custom-search-input ">
+		<form method="get" action="/listUsers">
+			<div
+					class="input-group col-xs-8 col-sm-6 col-md-4 col-lg-5 pull-right">
+				<input type="text" class="search-query form-control"
+					   placeholder="Nombre de la canción" name="busqueda"/> <span
+					class="input-group-btn">
+					<button class="btn" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+	</div>
+</div>
+
 <!--  Se le pasa {usuario: usuarioSesion, usuarios : usuarios}-->
 	<div class="container">
 		<h2>
@@ -24,57 +42,59 @@
 		<p id="demo"></p>
 		<p text="#{usuariosSistema.field}" id="parrafoUsuariosSistema">Los usuarios que actualmente
 			figuran en el sistema son los siguientes:</p>
-		<!--<div class="table-responsive">
-			<table class="table table-hover" id="tablaUsuarios">
-				<thead>
-					<tr>
-						<th th:text='#{email.field}'>Email</th>
-						<th th:text='#{nombre.field}'>Nombre</th>
-						<th th:text='#{apellidos.field}'>Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:id="'filaDe' + ${user.email}" th:each="user : ${usersList}">
-						<td th:text="${user.email}">ejemplo@correo.es</td>
-						<td th:text="${user.name}">Nombre del usuario</td>
-						<td th:text="${user.lastName}">Apellidos del usuario</td>
-
-						<!--  OJO AQUI  && existePeticion == false ->
-						<td th:if="${user.role == 'ROLE_USER'}"><a
-							th:id="'btn' + ${user.email}"
-							th:href="'/peticion/enviarPeticion?emailRecibe='+ ${user.email}"
-							th:text="'Agregar ' + ${user.name}" class="btn btn-primary"
-							th:if="${!usuariosConRelaciones.contains(user.email)}" /></td>
-					</tr>
-				</tbody>
-			</table>
-		</div> -->
 
 		<h2>Usuarios: </h2>
 
 		<div class="row">
 			<!-- http://librosweb.es/libro/bootstrap_3/capitulo_2/tipos_de_rejillas.html -->
 			<!-- Inicio del Bloque canción -->
-			{% for user in usuarios %}
+
 		<table class="table table-hover" id="tablaUsuarios">
+			<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellidos</th>
+				<th>Email</th>
+				<th class="col-md-1"></th>
+			</tr>
+			</thead>
+
 			<tbody>
-			<tr id="fila">
+			{% for user in usuarios %}
+			<tr id="filaDe{{user.email}}">
 				<td >{{ user.nombre }}</td>
 				<td >{{ user.apellidos }}</td>
 				<td >{{ user.email }}</td>
-
+				{% if usuario != user.email %}
+				<td><a id="btn{{user.email}}" href="/peticion/enviar/{{user.email}}"
+						 class="btn btn-primary">Agregar {{user.nombre}}</a>
+				</td>
+				{% else %}
+				<td><a id="btn{{user.email}}" href=""
+					   class="btn btn-danger">Eres tu</a>
+				</td>
+				{% endif %}
 			</tr>
+			{% endfor %}
 			</tbody>
 		</table>
-		{% endfor %}
+
 			</div>
 
-		<footer replace="fragments/pagination" />
+		<!-- Paginación mostrar la actual y 2 anteriores y dos siguientes -->
+		<div class="row text-center">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+				<li class="page-item active"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<li class="page-item"><a class="page-link" href="#">5</a></li>
+				<li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+			</ul>
+		</div>
+
 	</div>
+{% endblock %}
 
-	<footer replace="fragments/footer" />
 
-</body>
-</html>
