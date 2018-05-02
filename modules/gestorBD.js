@@ -178,5 +178,54 @@ module.exports = {
             db.close();
         });
         //this.mongo.MongoClient.connection.db.dropDatabase(funcionCallback);
+    }, insertarMensaje: function (mensaje, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('mensajes');
+                collection.insert(mensaje, function (err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result.ops[0]._id);
+                    }
+                    db.close();
+                });
+            }
+        });
+    }, modificarMensaje: function (criterio, mensaje, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('mensajes');
+                collection.update(criterio, {$set: mensaje}, function (err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result);
+                    }
+                    db.close();
+                });
+            }
+        });
+    }, obtenerMensajes: function (criterio, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('mensajes');
+                orden = { fecha : 1} //Los mas viejos primero, si los quieres al reves, pon -1
+                collection.find(criterio).sort(orden).toArray(function (err, peticiones) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(peticiones);
+                    }
+                    db.close();
+                });
+            }
+        });
     }
 };

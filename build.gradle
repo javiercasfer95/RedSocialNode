@@ -61,14 +61,14 @@ task initSourceFolders { // add << before { to prevent executing during configur
 */
 
 task run(type: Exec) <<{
-	println 'runHelloWorld1'
+	println 'app.js'
 	// java -Djava.library.path=lib -jar lib/avatar-js.jar hello-world-server.js
-	commandLine 'java', '-Djava.library.path=lib', '-jar', 'lib/avatar-js.jar', 'hello-world-server.js'
-	println 'runHelloWorld1 finished'
+	commandLine 'java', '-Djava.library.path=lib', '-jar', 'lib/avatar-js.jar', 'app.js'
+	println 'app.js finished'
 }
 task run2(type: JavaExec) <<{
 	println 'runHelloWorld2'
-	args 'hello-world-server.js'
+	args 'app.js'
 	main 'com.oracle.avatar.js.Server'
 	systemProperties 'java.library.path':'lib'
 	classpath 'lib/avatar-js.jar'

@@ -1,6 +1,9 @@
 // Módulos
 var express = require('express');
 var app = express();
+
+var jwt = require('jsonwebtoken');
+app.set('jwt',jwt);
 /*
 var fs = require('fs');
 var https = require('https');
@@ -23,6 +26,45 @@ var fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 //ROUTERS
+// routerUsuarioToken
+var routerUsuarioToken = express.Router();
+routerUsuarioToken.use(function(req, res, next) {
+    // obtener el token, puede ser un parámetro GET , POST o HEADER
+    var token = req.body.token || req.query.token || req.headers['token'];
+
+    var caducidadSeg = 600; // 10min * 60
+    if (token != null) {
+        // verificar el token
+        jwt.verify(token, 'secreto', function(err, infoToken) {
+            if (err || (Date.now()/1000 - infoToken.tiempo) > caducidadSeg ){
+                res.status(403); // Forbidden
+                res.json({
+                    acceso : false,
+                    error: 'Token invalido o caducado'
+                });
+                // También podríamos comprobar que intoToken.usuario existe
+                return;
+
+            } else {
+                // dejamos correr la petición
+                res.usuario = infoToken.usuario;
+                next();
+            }
+        });
+
+    } else {
+        res.status(403); // Forbidden
+        res.json({
+            acceso : false,
+            mensaje: 'No hay Token'
+        });
+    }
+});
+// Aplicar routerUsuarioToken
+app.use('/api/amigos*', routerUsuarioToken);
+app.use('/api/mensaje*', routerUsuarioToken);
+
+
 
 // routerUsuarioSession
 var routerUsuarioSession = express.Router();
@@ -117,7 +159,7 @@ require("./routes/rusuarios.js")(app, swig, gestorBD); // (app, param1, param2, 
 require("./routes/rpeticiones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/rcolegas.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/radmin.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
-require("./routes/rcanciones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
+require("./routes/rapiredsocial.js")(app, gestorBD); // (app, param1, param2, etc.)
 
 
 //Ruta por defecto de la aplicacion
