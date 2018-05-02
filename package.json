@@ -1,8 +1,8 @@
 {
-  "name": "TiendaMusica",
+  "name": "Redsocialnator",
   "version": "0.1.0",
-  "description": "TiendaMusica",
-  "main": "hello-world-server.js",
+  "description": "Redsocialnator",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
   },
