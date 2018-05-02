@@ -135,5 +135,48 @@ module.exports = {
                 });
             }
         });
+    }, insertarCoelga: function (colega, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('colegas');
+                collection.insert(colega, function (err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result.ops[0]._id);
+                    }
+                    db.close();
+                });
+            }
+        });
+    }, obtenerColegas: function (criterio, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('colegas');
+                collection.find(criterio).toArray(function (err, peticiones) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(peticiones);
+                    }
+                    db.close();
+                });
+            }
+        });
+    }, restoreDatabase: function(funcionCallback){
+       this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                //this.mongo.connection.db.dropDatabase(funcionCallback);
+                db.dropDatabase(funcionCallback)
+            }
+            db.close();
+        });
+        //this.mongo.MongoClient.connection.db.dropDatabase(funcionCallback);
     }
 };

@@ -43,8 +43,14 @@ module.exports = function (app, swig, gestorBD) {
                     nombre: req.body.nombre,
                     apellidos: req.body.apellidos,
                     email: req.body.email,
-                    password: seguro
+                    password: seguro,
+                    role : "ROLE_USER"
                 }
+                //Para hacer un admin a la guarra
+                if(usuario.email == "admin@correo.es"){
+                    usuario.role = "ROLE_ADMIN"
+                }
+
                 gestorBD.insertarUsuario(usuario, function (id) {
                     if (id == null) {
                         //res.send("Error al insertar ");
@@ -53,7 +59,7 @@ module.exports = function (app, swig, gestorBD) {
                         //res.send('Usuario Insertado ' + id);
                         //res.redirect("/home");
                         // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
-                        res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
+                        res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
                     }
                 });
         });
@@ -65,13 +71,13 @@ module.exports = function (app, swig, gestorBD) {
 
 
     app.post("/identificarse", function (req, res) {
-        console.log("User name:" + req.body.email);
-        console.log("User passwrod: " + req.body.password);
+        //console.log("User name:" + req.body.email);
+        //console.log("User passwrod: " + req.body.password);
         var seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(req.body.password.toString()).digest('hex');
 
         var criterio = {email: req.body.email, password: seguro};
 
-            console.log=("Criterio de busqueda: "+ criterio.email);
+           // console.log=("Criterio de busqueda: "+ criterio.email);
 
 
 
@@ -82,14 +88,12 @@ module.exports = function (app, swig, gestorBD) {
                 //res.send("No identificado: ");
                 res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
             } else {
-                req.session.usuario = usuarios[0].email;
+                req.session.usuario = usuarios[0];
                 //res.send("identificado");
 
                 //Mejoramos la respuesta de la identificacion
                 res.redirect("/home" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
-
             }
-
         });
     });
     app.get('/desconectarse', function (req, res) {

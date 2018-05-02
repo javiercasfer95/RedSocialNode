@@ -10,7 +10,7 @@
 			<div
 					class="input-group col-xs-8 col-sm-6 col-md-4 col-lg-5 pull-right">
 				<input type="text" class="search-query form-control"
-					   placeholder="Nombre de la canción" name="busqueda"/> <span
+					   placeholder="Nombre del usuario" name="busqueda"/> <span
 					class="input-group-btn">
 					<button class="btn" type="submit">
 						<span class="glyphicon glyphicon-search"></span>
@@ -25,18 +25,9 @@
 	<div class="container">
 		<h2>
 			<div class="container">
-				<p  id="bienvenidaUser">Bienvenido  {{ usuarioSesion.nombre }}</p>
+				<p  id="bienvenidaUser">Bienvenido  {{ usuario.nombre }}</p>
 			</div>
 		</h2>
-
-		<form class="navbar-form" action="/user/list">
-			<div class="form-group">
-				<input id="search" name="searchText" type="text"
-					class="form-control" size="50"
-					placeholder="Pepe el del huevo repe">
-			</div>
-			<button type="submit" class="btn btn-default" id="searchButton" text="#{bt.buscar}">Buscar</button>
-		</form>
 		
 		
 		<p id="demo"></p>

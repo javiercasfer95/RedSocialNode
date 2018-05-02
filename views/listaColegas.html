@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de usuarios {% endblock %}
+
+{% block contenido_principal %}
+
+<!--  Se le pasa {usuario: usuarioSesion, colegas : usuarios}-->
+<div class="container">
+
+    <h2>Eh, {{usuario.nombre}}, estos son tus colegas: </h2>
+
+    <div class="row">
+        <!-- http://librosweb.es/libro/bootstrap_3/capitulo_2/tipos_de_rejillas.html -->
+        <!-- Inicio del Bloque canción -->
+
+        <table class="table table-hover" id="tablaUsuarios">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for user in colegas %}
+            <tr id="filaDe{{user.email}}">
+                <td >{{ user.nombre }}</td>
+                <td >{{ user.apellidos }}</td>
+                <td >{{ user.email }}</td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

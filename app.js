@@ -32,7 +32,7 @@ routerUsuarioSession.use(function (req, res, next) {
         // dejamos correr la petición
         next();
     } else {
-        console.log("va a : " + req.session.destino)
+        //console.log("va a : " + req.session.destino)
         res.redirect("/identificarse");
     }
 });
@@ -40,6 +40,8 @@ routerUsuarioSession.use(function (req, res, next) {
 //Aplicar routerUsuarioSession
 app.use("/listUsers", routerUsuarioSession);
 app.use("/peticion*", routerUsuarioSession);
+app.use("/amigo*", routerUsuarioSession);
+app.use("/admin*", routerUsuarioSession);
 app.use("/canciones/agregar", routerUsuarioSession);
 app.use("/publicaciones", routerUsuarioSession);
 app.use("/cancion/comprar", routerUsuarioSession);
@@ -113,6 +115,8 @@ app.set('crypto', crypto);
 require("./routes/rhome.js")(app, swig); // (app, param1, param2, etc.)
 require("./routes/rusuarios.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/rpeticiones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
+require("./routes/rcolegas.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
+require("./routes/radmin.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/rcanciones.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 
 
@@ -121,10 +125,9 @@ app.get('/', function (req, res) {
     res.redirect('/home');
 });
 
-app.use(function (err, req, res, next) {
+app.use( function (err, req, res, next ) {
     console.log("Error producido: " + err); //we log the error in our db
-    if (!res.headersSent) {
-        //console.log("Error producido: " + err.toString());
+    if (! res.headersSent) {
         res.status(400);
         res.send("Recurso no disponible");
     }

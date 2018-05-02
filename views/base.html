@@ -31,11 +31,13 @@
             <!-- IZQUIERDA -->
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="/">Home</a></li>
+
+                {% if usuario != null %}
+
                 <li><a href="/listUsers" id="userListPage"> <span
                         class="glyphicon glyphicon-user"></span> Usuarios
                 </a></li>
-
-                <li ><a id="amigos" href="/user/myFriends"> <span
+                <li ><a id="amigos" href="/amigos/lista"> <span
                         class="glyphicon glyphicon-user"></span><span
                         class="glyphicon glyphicon-user"></span> Amigos
                 </a></li>
@@ -55,21 +57,30 @@
                                >Peticiones enviadas</a></li>
 
                     </ul></li>
+                {% if usuario.role == 'ROLE_ADMIN' %}
+                <li><a href="/admin/dropDatabase" id="userListPage"> <span
+                        class="glyphicon glyphicon-user"></span> Reiniciar BD
+                </a></li>
+                {% endif %}
+                {% endif %}
+
             </ul>
 
 
             <!-- DERECHA -->
             <ul class="nav navbar-nav navbar-right">
-
+                {% if usuario == null %}
                 <li><a id="signup" href="/registrarse">  <!--<span
 						class="glyphicon glyphicon-user" > Registrate </span> --> Singup
                 </a></li>
                 <li><a id="login" href="/identificarse"> <!--<span
                         class="glyphicon glyphicon-user" > </span> --> Login
                 </a></li>
+                {% else %}
                 <li><a id="logout" href="/desconectarse"> <span
                         class="glyphicon glyphicon-ban-circle" > </span>  Logout
                 </a></li>
+                {% endif %}
             </ul>
 
         </div>
@@ -113,7 +124,12 @@
             if (tipoMensaje == "") {
                 tipoMensaje = 'alert-info';
             }
-            $(".container").append("<div class='alert " + tipoMensaje + "'>" + mensaje + " </div>");
+           /* window.setTimeout(function () {
+                //$("#success-alert").alert('close');
+                $(".container").append("<div class='alert " + tipoMensaje + "'>" + mensaje + " </div>");
+                }, 2000);
+                */
+        $(".container").append("<div class='alert " + tipoMensaje + "'>" + mensaje + " </div>");
         }
 
         mensaje = null;

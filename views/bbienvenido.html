@@ -7,7 +7,9 @@
 
 
     <h2>Red Rocial</h2>
-    <h3>Bienvenido, {{usuario}}</h3>
+    {% if usuario != null %}
+    <h3>Bienvenido, {{usuario.nombre}}</h3>
+    {% endif %}
 
 </div>
 {% endblock %}
