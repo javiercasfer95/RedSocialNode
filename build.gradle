@@ -16,7 +16,7 @@
 *	2014-05-20 =['src'] instead of 'src'
 * @author Paul Verest
 */
-println GradleVersion.current().prettyPrint()
+//println GradleVersion.current().prettyPrint()
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
