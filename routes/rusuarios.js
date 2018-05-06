@@ -139,4 +139,35 @@ module.exports = function (app, swig, gestorBD) {
 
         });
     });
+
+
+
+
+    //Listar todos los mensajes
+    app.get("/chat", function (req, res) {
+        var criterio = {};
+
+        //Busqueda de usuarios
+        if (req.query.busqueda != null) {
+            criterio = {"nombre": {$regex: ".*" + req.query.busqueda + ".*"}};
+        }
+
+        gestorBD.obtenerMensajes(criterio, function (mensajes) {
+            if (mensajes == null || mensajes.length == 0) {
+                //req.session.usuario = null;
+                var respuesta = swig.renderFile('views/chat.html', {
+                    usuario: usuarioSesion,
+                    mensajes: mensajes,
+                });
+                res.send(respuesta);
+            } else {
+                var usuarioSesion = req.session.usuario;
+                var respuesta = swig.renderFile('views/chat.html', {
+                    usuario: usuarioSesion,
+                    mensajes: mensajes,
+                                });
+                res.send(respuesta);
+            }
+        });
+    });
 };

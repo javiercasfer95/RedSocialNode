@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de usuarios {% endblock %}
+
+{% block contenido_principal %}
+
+<div class="row">
+
+
+<!--  Se le pasa {usuario: usuarioSesion, usuarios : usuarios}-->
+<div class="container">
+
+    <p text="#{usuariosSistema.field}" id="parrafoMensajesSistema">Los mensajes que actualmente
+        figuran en el sistema son los siguientes:</p>
+
+    <h2>Mensajes: </h2>
+
+    <div class="row">
+        <!-- YA VEREMOS COMO LO ORGANIZAMOS -->
+
+        <table class="table table-hover" id="tablaMensajes">
+            <thead>
+            <tr>
+                <th>Contenido</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th class="col-md-1"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for msj in mensajes %}
+            <tr id="filaDe{{msj.emisor}}">
+                <td>{{ msj.texto }}</td>
+                <td>{{ msj.emisor }}</td>
+                <td>{{ msj.fecha }}</td>
+
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+{% endblock %}
+
+
+</div>

@@ -41,6 +41,10 @@
                         class="glyphicon glyphicon-user"></span><span
                         class="glyphicon glyphicon-user"></span> Amigos
                 </a></li>
+                <!--CHAT-->
+                <li><a href="/chat" id="chat"> <span
+                        class="glyphicon glyphicon-user"></span> Mensajes
+                </a></li>
 
 
                 <li id="users-menu" class="dropdown"
@@ -58,7 +62,7 @@
 
                     </ul></li>
                 {% if usuario.role == 'ROLE_ADMIN' %}
-                <li><a href="/admin/dropDatabase" id="userListPage"> <span
+                <li><a href="/admin/dropDatabase" id="userListPage2"> <span
                         class="glyphicon glyphicon-user"></span> Reiniciar BD
                 </a></li>
                 {% endif %}

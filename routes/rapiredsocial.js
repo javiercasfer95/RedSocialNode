@@ -109,7 +109,7 @@ module.exports = function (app, gestorBD) {
 
                 gestorBD.insertarMensaje(mensaje, function (id) {
                     if(id == null){
-                        res.satatus(401)
+                        res.status(401)
                         res.json({
                             error : "Error al enviar el mensaje."
                         })
