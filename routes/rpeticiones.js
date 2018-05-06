@@ -15,7 +15,7 @@ module.exports = function (app, swig, gestorBD) {
                 res.redirect("/listUsers" + "?mensaje=Error al buscar peticiones recibidas" + "&tipoMensaje=alert-danger ");
             } else {
                 var respuesta = swig.renderFile('views/peticionesRecibidas.html', {
-                    usuario: usuarioSesion,
+                    usuario: req.session.usuario,
                     peticiones: peticiones
                 });
                 res.send(respuesta);

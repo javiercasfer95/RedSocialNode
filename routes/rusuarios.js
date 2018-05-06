@@ -120,14 +120,20 @@ module.exports = function (app, swig, gestorBD) {
         }
 
 
-        gestorBD.obtenerUsuariosPg(criterio, pg, function (usuarios) {
+        gestorBD.obtenerUsuariosPg(criterio, pg, function (usuarios, total) {
             if (usuarios == null || usuarios.length == 0) {
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 //res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
             } else {
+                var pgUltima = total / 4;
                 var usuarioSesion = req.session.usuario;
-                var respuesta = swig.renderFile('views/list.html', {usuario: usuarioSesion, usuarios: usuarios});
+                var respuesta = swig.renderFile('views/list.html', {
+                    usuario: usuarioSesion,
+                    usuarios: usuarios,
+                    pgActual: pg,
+                    pgUltima : pgUltima
+                });
                 res.send(respuesta);
             }
 
