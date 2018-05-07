@@ -178,11 +178,20 @@ module.exports = function (app, gestorBD) {
                 })
             } else {
                 res.status(200);
-                res.json({
+                /*res.send(JSON.stringify({
                     usuario : usuarioSesion,
                     colega : colega,
                     mensajes : mensajes
-                })
+                }));
+                */
+                var guarrada = {
+                    usuario : usuarioSesion,
+                    colega : colega,
+                    mensajes : mensajes
+                }
+                res.send(JSON.stringify(guarrada));
+
+                //res.send(JSON.stringify(mensajes))
             }
         });
     });

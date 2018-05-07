@@ -3,10 +3,10 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Texto</th>
-            <th>Emisor</th>
-            <th>Fecha</th>
+            <th class="col-md-1">Tu colega</th>
             <th class="col-md-1"></th>
+            <th class="col-md-1"></th>
+            <th class="col-md-1">Tú</th>
         </tr>
         </thead>
         <tbody id="tabla">
@@ -16,9 +16,12 @@
 </div>
 
 <script>
+    var mensajes;
+    var usuarioSesion;
+    var colega;
     function cargarMensajes() {
         $.ajax({
-            url: URLbase + "/chat/" + idAmigo,
+            url: URLbase + "/mensaje/" + idAmigo,
             type: "GET",
             data: {},
             dataType: 'json',
@@ -26,12 +29,14 @@
                 "token": token
             },
             success: function (respuesta) {
-                mensajes = respuesta;
+                //var respuesta = JSON.parse(respuesta);
+                usuarioSesion = respuesta.usuario;
+                colega = respuesta.colega;
+                mensajes = respuesta.mensajes;
                 actualizarTabla(mensajes);
             },
             error: function (error) {
-                console.log("Error");
-                $("#contenedor-principal").load("widget-chat.html");
+                $("#contenedor-principal").load("widget-login.html");
             }
         });
     }
@@ -44,18 +49,30 @@
     function actualizarTabla(mensajes){
         $("#tabla").empty(); // Vaciar la tabla
         for (i = 0; i < mensajes.length; i++) {
-            $("#tabla").append(
-                "<tr id="+mensajes[i]._id+">"+
-                "<td>"+mensajes[i].texto+"</td>" +
-                "<td>"+mensajes[i].emisor+"</td>" +
-                "<td>"+mensajes[i].fecha.toUTCString()+"</td>" +
-                "<td>"+
-                "</td>"+
-                "</tr>" );
-
+            if(mensajes[i].emisor == usuarioSesion){
+                $("#tabla").append(
+                    "<tr id="+mensajes[i]._id+">"+
+                    "<td>"+ "</td>"+
+                    "<td>"+ "</td>"+
+                    "<td id="+mensajes[i].fecha.toString()+">"+"</td>"+
+                    "<td>"+mensajes[i].texto+"</td>" +
+                    "</tr>"
+                );
+            }
+            else{
+                $("#tabla").append(
+                    "<tr id="+mensajes[i]._id+">"+
+                    "<td>"+mensajes[i].texto+"</td>"+
+                    "<td id="+mensajes[i].fecha.toString()+">"+"</td>"+
+                    "<td>"+ "</td>"+
+                    "<td>"+ "</td>"+
+                    "</td>"
+                );
+            }
         }
     }
 
     cargarMensajes();
 </script>
+
 </div>

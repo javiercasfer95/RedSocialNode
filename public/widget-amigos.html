@@ -21,7 +21,7 @@
 
 <script>
     //Siempre despues del HTML
-    var canciones;
+    var amigos;
     function cargarAmigos(){
         $.ajax({
             url: URLbase + "/amigos",
@@ -47,7 +47,7 @@
                 "<td>"+amigos[i].apellidos+"</td>" +
                 "<td>"+amigos[i].email+"</td>" +
                 "<td>"+
-                "<a onclick=chat('"+amigos[i]._id+"')>Chat</a><br>"+
+                "<a onclick=chat('"+amigos[i].email+"')>Chat</a><br>"+
                 "</td>"+
                 "</tr>" );
             // Mucho cuidado con las comillas del eliminarCancion
@@ -73,7 +73,6 @@
     }
 
     cargarAmigos();
-
     function chat(_id) {
         idAmigo = _id;
         $( "#contenedor-principal" ).load( "widget-chat.html");
