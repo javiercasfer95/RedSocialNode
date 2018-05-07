@@ -30,16 +30,25 @@
 
             <tbody>
             {% for msj in mensajes %}
+
             <tr id="filaDe{{msj.emisor}}">
                 <td>{{ msj.texto }}</td>
                 <td>{{ msj.emisor }}</td>
-                <td>{{ msj.fecha }}</td>
+                <td id="date">{{ msj.fecha.toUTCString() }}</td>
 
 
             </tr>
             {% endfor %}
+
+
             </tbody>
         </table>
+        <form action="/enviarMensaje">
+            <br>
+            <input type="text" name="firstname">
+            <br><br>
+            <input type="submit" class="btn btn-primary" value="Enviar">
+        </form>
 
     </div>
 

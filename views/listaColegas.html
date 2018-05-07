@@ -28,7 +28,9 @@
                 <td >{{ user.nombre }}</td>
                 <td >{{ user.apellidos }}</td>
                 <td >{{ user.email }}</td>
-
+                <td><a id="btn{{user.email}}" href="/chat/{{user.email}}"
+                       class="btn btn-primary">Chat</a>
+                </td>
             </tr>
             {% endfor %}
             </tbody>

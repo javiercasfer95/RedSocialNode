@@ -170,4 +170,94 @@ module.exports = function (app, swig, gestorBD) {
             }
         });
     });
+
+
+
+    app.get('/chat/:emisor', function (req, res) {
+
+        var usuarioSesion = req.session.usuario.email;
+        var emisor = req.params.emisor;
+
+        if (usuarioSesion == emisor)
+            res.redirect("/chat" + "?mensaje=No te intentes aceptar una peticion a ti mismo, colega." + "&tipoMensaje=alert-danger");
+
+        var criterio = {emisor: emisor, destino: usuarioSesion};
+
+        gestorBD.obtenerMensajes(criterio, function (mensajes) {
+            if (mensajes == null) {
+                res.redirect("/chat" + "?mensaje=Error al buscar los mensajes de" + emisor + "." + "&tipoMensaje=alert-danger");
+            }else{
+                var respuesta = swig.renderFile('views/chat.html', {
+                    usuario: usuarioSesion,
+                    mensajes: mensajes,
+                });
+                res.send(respuesta);
+            }
+
+        });
+    });
+
+
+
+
+
+
+/*
+    app.post("/enviarMensaje", function(req, res) {
+        var destino = req.body.destino;
+        var emisor = res.usuario;
+        var texto = req.body.texto;
+        var leido = false;
+
+        var criterioA = {
+            user1: emisor,
+            user2: destino
+        }
+        var criterioB = {
+            user1: destino,
+            user2: emisor
+        }
+
+        var criterio = { $or : [ criterioA, criterioB ]};
+
+        //Priemero es ver si son amigos
+        gestorBD.obtenerColegas(criterio, function (colegas) {
+            if (colegas == null) {
+                res.status(401);
+                res.json({
+                    error : "Error al buscar colegas en la base de datos."
+                })
+            }else if(colegas.length == 0){
+                res.status(401);
+                res.json({ error : "No se puede enviar el mensaje ya que no sois amigos."})
+            } else {
+                var date = new Date();
+                var mensaje = {
+                    emisor : emisor,
+                    destino : destino,
+                    texto : texto,
+                    leido : false,
+                    fecha : date
+                }
+
+                gestorBD.insertarMensaje(mensaje, function (id) {
+                    if(id == null){
+                        res.status(401)
+                        res.json({
+                            error : "Error al enviar el mensaje."
+                        })
+                    }else{
+                        res.status(200);
+                        //res.send(JSON.stringify(usuarios));
+                        res.json({
+                            text : "Se ha creado el mensaje",
+                            _id : id
+                        })
+                    }
+                })
+            }
+        });
+    });
+*/
+
 };
