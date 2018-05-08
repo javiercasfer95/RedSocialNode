@@ -27,11 +27,11 @@
         <tr id="filaDe{{peticion.receptor}}">
             <td >{{ peticion.receptor }}</td>
             {% if peticion.aceptada %}
-            <td><a id="'info{{user.email}}"
+            <td><a id="'info{{peticion.receptor}}aceptada"
                    class="btn btn-success">Aceptada</a>
             </td>
             {% else %}
-            <td><a id="'info{{user.email}}"
+            <td><a id="'info{{peticion.receptor}}noaceptada"
                    class="btn btn-info">Aún no aceptada</a>
             </td>
             {% endif %}

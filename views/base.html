@@ -37,7 +37,7 @@
                 <li><a href="/listUsers" id="userListPage"> <span
                         class="glyphicon glyphicon-user"></span> Usuarios
                 </a></li>
-                <li ><a id="amigos" href="/amigos/lista"> <span
+                <li ><a id="listAmigos" href="/amigos/lista"> <span
                         class="glyphicon glyphicon-user"></span><span
                         class="glyphicon glyphicon-user"></span> Amigos
                 </a></li>
@@ -62,7 +62,7 @@
 
                     </ul></li>
                 {% if usuario.role == 'ROLE_ADMIN' %}
-                <li><a href="/admin/dropDatabase" id="userListPage2"> <span
+                <li><a id="reloadDatabase" href="/admin/dropDatabase" id="userListPage2"> <span
                         class="glyphicon glyphicon-user"></span> Reiniciar BD
                 </a></li>
                 {% endif %}

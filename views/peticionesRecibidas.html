@@ -27,11 +27,11 @@
         <tr id="filaDe{{peticion.emisor}}">
             <td >{{ peticion.emisor }}</td>
             {% if !peticion.aceptada %}
-            <td><a id="btn{{user.email}}" href="/peticion/aceptar/{{peticion.emisor}}"
+            <td><a id="btn{{peticion.emisor}}noaceptada" href="/peticion/aceptar/{{peticion.emisor}}"
                    class="btn btn-primary">Aceptar a {{peticion.emisor}}</a>
             </td>
             {% else %}
-            <td><a id="'btn' + {{user.email}}" href=""
+            <td><a id="'btn' + {{peticion.emisor}}aceptada" href=""
                    class="btn btn-success">Aceptada</a>
             </td>
             {% endif %}
