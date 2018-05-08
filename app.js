@@ -94,12 +94,9 @@ app.use("/peticion*", routerUsuarioSession);
 app.use("/amigo*", routerUsuarioSession);
 app.use("/admin*", routerUsuarioSession);
 
-
-
-
 //FIN ROUTERS
 
-
+app.use(express.static('public'));
 //FIN MODULOS
 
 

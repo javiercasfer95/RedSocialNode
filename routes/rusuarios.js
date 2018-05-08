@@ -29,39 +29,44 @@ module.exports = function (app, swig, gestorBD) {
 
             //Comprobar que el email no existe en el sistema
             var criterio = {}; //Obtendria todos los usuarios
+            var existeMail = false;
             gestorBD.obtenerUsuarios(criterio, function (usuarios) {
                 for (i = 0; i < usuarios.length; i++) {
                     if (usuarios[i].email == email) {
-                        res.redirect("/registrarse" + "?mensaje=Ya existe un usuario con ese email" + "&tipoMensaje=alert-danger");
+                        existeMail = true;
                         break
                     }
                 }
-                var pass = req.body.password.toString();
-                var seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(pass).digest('hex');
+                if(existeMail) {
+                    res.redirect("/registrarse" + "?mensaje=Ya existe un usuario con ese email" + "&tipoMensaje=alert-danger");
+                }else{
+                    var pass = req.body.password.toString();
+                    var seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(pass).digest('hex');
 
-                var usuario = {
-                    nombre: req.body.nombre,
-                    apellidos: req.body.apellidos,
-                    email: req.body.email,
-                    password: seguro,
-                    role: "ROLE_USER"
-                }
-                //Para hacer un admin a la guarra
-                if (usuario.email == "admin@correo.es") {
-                    usuario.role = "ROLE_ADMIN"
-                }
-
-                gestorBD.insertarUsuario(usuario, function (id) {
-                    if (id == null) {
-                        //res.send("Error al insertar ");
-                        res.redirect("/registrarse?mensaje=Error al registrar usuario")
-                    } else {
-                        //res.send('Usuario Insertado ' + id);
-                        //res.redirect("/home");
-                        // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
-                        res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
+                    var usuario = {
+                        nombre: req.body.nombre,
+                        apellidos: req.body.apellidos,
+                        email: req.body.email,
+                        password: seguro,
+                        role: "ROLE_USER"
                     }
-                });
+                    //Para hacer un admin a la guarra
+                    if (usuario.email == "admin@correo.es") {
+                        usuario.role = "ROLE_ADMIN"
+                    }
+
+                    gestorBD.insertarUsuario(usuario, function (id) {
+                        if (id == null) {
+                            //res.send("Error al insertar ");
+                            res.redirect("/registrarse?mensaje=Error al registrar usuario")
+                        } else {
+                            //res.send('Usuario Insertado ' + id);
+                            //res.redirect("/home");
+                            // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
+                            res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
+                        }
+                    });
+                }
             });
         }
     });
