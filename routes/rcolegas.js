@@ -9,14 +9,20 @@ module.exports = function (app, swig, gestorBD) {
 
         var criterio = { $or : [ criterioA, criterioB ]};
 
+        //Paginacion
+        var pg = parseInt(req.query.pg); // Es String !!!
+        if (req.query.pg == null) { // Puede no venir el param
+            pg = 1;
+        }
 
         //FIN QUERY
-        gestorBD.obtenerColegas(criterio, function (colegas) {
+        gestorBD.obtenerColegasPg(criterio,pg, function (colegas, total) {
             if (colegas == null) {
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.redirect("/listUsers" + "?mensaje=Error al buscar colegas." + "&tipoMensaje=alert-danger ");
             } else {
+                var pgUltima = total / 5;
                 var listaCorreoUsuarios = [];
                 var it = 0;
                 for(i = 0; i < colegas.length; i++){
@@ -32,7 +38,12 @@ module.exports = function (app, swig, gestorBD) {
                     if(usuarios == null){
                         res.redirect("/listUsers" + "?mensaje=Error al buscar colegas" + "&tipoMensaje=alert-danger ");
                     }else{
-                        var respuesta = swig.renderFile('views/listaColegas.html', {usuario: req.session.usuario, colegas: usuarios});
+                        var respuesta = swig.renderFile('views/listaColegas.html', {
+                            usuario: req.session.usuario,
+                            colegas: usuarios,
+                            pgActual: pg,
+                            pgUltima : pgUltima
+                        });
                         res.send(respuesta);
                     }
 

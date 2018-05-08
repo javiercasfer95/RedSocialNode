@@ -5,7 +5,7 @@ module.exports = function (app, swig, gestorBD) {
     var apellidos = ["Francisco", "Gonzalez", "Dogg", "Castro", "Valles", "Alonso", "Rodriguez", "Fernandez",
         "Álvarez" ];
 
-    var correos = ["gmail.com", "hotmail.es", "uniovi.es", "live.com"];
+    var correos = ["@gmail.com", "@hotmail.es", "@uniovi.es", "@live.com"];
 
     function crearUsuariosRandom(){
         var numUsers = 40;
@@ -23,7 +23,7 @@ module.exports = function (app, swig, gestorBD) {
             usuario = {
                 nombre: nombres[itNames],
                 apellidos: apellidos[itNames],
-                email: nombres[itNames]+apellidos[itNames]+"@"+correos[itCorreos],
+                email: nombres[itNames]+apellidos[itNames]+correos[itCorreos],
                 password: seguro,
                 role : "ROLE_USER"
             }

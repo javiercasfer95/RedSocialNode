@@ -7,16 +7,25 @@ module.exports = function (app, swig, gestorBD) {
         var usuarioSesion = req.session.usuario.email;
         var criterio = {receptor: usuarioSesion};
 
+        //Paginacion
+        var pg = parseInt(req.query.pg); // Es String !!!
+        if (req.query.pg == null) { // Puede no venir el param
+            pg = 1;
+        }
 
-        gestorBD.obtenerPeticiones(criterio, function (peticiones) {
+
+        gestorBD.obtenerPeticiones(criterio, function (peticiones, total) {
             if (peticiones == null) {
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.redirect("/listUsers" + "?mensaje=Error al buscar peticiones recibidas" + "&tipoMensaje=alert-danger ");
             } else {
+                var pgUltima = total / 5;
                 var respuesta = swig.renderFile('views/peticionesRecibidas.html', {
                     usuario: req.session.usuario,
-                    peticiones: peticiones
+                    peticiones: peticiones,
+                    pgActual: pg,
+                    pgUltima : pgUltima
                 });
                 res.send(respuesta);
             }

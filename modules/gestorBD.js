@@ -78,15 +78,15 @@ module.exports = {
             } else {
                 var collection = db.collection('usuarios');
                 collection.count(function (err, count) {
-                collection.find(criterio).skip((pg - 1) * 4).limit(4).toArray(function (err, usuarios) {
-                    if (err) {
-                        funcionCallback(null);
-                    } else {
-                        funcionCallback(usuarios, count);
-                    }
-                    db.close();
+                    collection.find(criterio).skip((pg - 1) * 5).limit(5).toArray(function (err, usuarios) {
+                        if (err) {
+                            funcionCallback(null);
+                        } else {
+                            funcionCallback(usuarios, count);
+                        }
+                        db.close();
+                    });
                 });
-            });
             }
         });
     }, obtenerPeticionesPg: function (criterio, pg, funcionCallback) {
@@ -95,13 +95,15 @@ module.exports = {
                 funcionCallback(null);
             } else {
                 var collection = db.collection('peticiones');
-                collection.find(criterio).skip((pg - 1) * 4).limit(4).toArray(function (err, peticiones) {
-                    if (err) {
-                        funcionCallback(null);
-                    } else {
-                        funcionCallback(peticiones);
-                    }
-                    db.close();
+                collection.count(function (err, count) {
+                    collection.find(criterio).skip((pg - 1) * 5).limit(5).toArray(function (err, peticiones) {
+                        if (err) {
+                            funcionCallback(null);
+                        } else {
+                            funcionCallback(peticiones, count);
+                        }
+                        db.close();
+                    });
                 });
             }
         });
@@ -182,6 +184,24 @@ module.exports = {
                         funcionCallback(peticiones);
                     }
                     db.close();
+                });
+            }
+        });
+    }, obtenerColegasPg: function (criterio,pg, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('colegas');
+                collection.count(function (err, count) {
+                    collection.find(criterio).skip((pg - 1) * 5).limit(5).toArray(function (err, peticiones) {
+                        if (err) {
+                            funcionCallback(null);
+                        } else {
+                            funcionCallback(peticiones, count);
+                        }
+                        db.close();
+                    });
                 });
             }
         });

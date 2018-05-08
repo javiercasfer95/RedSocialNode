@@ -5,7 +5,7 @@
 {% block contenido_principal %}
 <h2>
     <div class="container">
-        <p  id="bienvenidaUser">Tus peticiones enviadas,  {{ usuario.nombre }}</p>
+        <p  id="bienvenidaUser">Tus peticiones enviadas pendientes,  {{ usuario.nombre }}</p>
     </div>
 </h2>
 
@@ -24,6 +24,7 @@
         </thead>
         <tbody>
         {% for peticion in peticiones %}
+        {% if !peticion.aceptada %}
         <tr id="filaDe{{peticion.receptor}}">
             <td >{{ peticion.receptor }}</td>
             {% if peticion.aceptada %}
@@ -36,6 +37,7 @@
             </td>
             {% endif %}
         </tr>
+        {% endif %}
         {% endfor %}
         </tbody>
     </table>

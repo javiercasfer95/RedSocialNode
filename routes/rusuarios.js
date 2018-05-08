@@ -85,9 +85,6 @@ module.exports = function (app, swig, gestorBD) {
 
            // console.log=("Criterio de busqueda: "+ criterio.email);
 
-
-
-
         gestorBD.obtenerUsuarios(criterio, function (usuarios) {
             if (usuarios == null || usuarios.length == 0) {
                 req.session.usuario = null;
@@ -98,7 +95,7 @@ module.exports = function (app, swig, gestorBD) {
                 //res.send("identificado");
 
                 //Mejoramos la respuesta de la identificacion
-                res.redirect("/home" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
+                res.redirect("/listUsers" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
             }
         });
     });
@@ -116,7 +113,9 @@ module.exports = function (app, swig, gestorBD) {
 
         //Busqueda de usuarios
         if (req.query.busqueda != null) {
-            criterio = {"nombre": {$regex: ".*" + req.query.busqueda + ".*"}};
+            var critA = {"nombre": {$regex: ".*" + req.query.busqueda + ".*"}};
+            var critB = {"email": {$regex: ".*" + req.query.busqueda + ".*"}};
+            criterio = {$or : [critA, critB]};
         }
 
         //Paginacion
@@ -132,7 +131,7 @@ module.exports = function (app, swig, gestorBD) {
                 //res.send("No identificado: ");
                 //res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
             } else {
-                var pgUltima = total / 4;
+                var pgUltima = total / 5;
                 var usuarioSesion = req.session.usuario;
                 var respuesta = swig.renderFile('views/list.html', {
                     usuario: usuarioSesion,
