@@ -1,5 +1,5 @@
 <div id="widget-chat" >
-
+    <div id="tituloAmigo"> </div>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -15,16 +15,22 @@
     </table>
 </div>
 
-<div id="enviar">
+<div id="divEnviar">
     <input type="text" class="form-control" placeholder="Enviar mensaje..."
-           id="mensaje"/>
-    <button id="boton-login" class="btn btn-primary" onclick="enviarMensaje(_id)">Enviar</button>
+           id="textoMensaje" name="textoMensaje"/>
+    <button id="btEnviarMensaje" class="btn btn-primary" onclick="enviarMensaje()">Enviar</button>
+</div>
+
+<div>
+    <button onclick="widgetAmigos()" class="btn" >Volver</button>
+    <button onclick="widgetChat()" class="btn" >Update</button>
 </div>
 
 <script>
     var mensajes;
     var usuarioSesion;
     var colega;
+
     function cargarMensajes() {
         $.ajax({
             url: URLbase + "/mensaje/" + idAmigo,
@@ -47,11 +53,6 @@
         });
     }
 
-
-
-
-
-
     function actualizarTabla(mensajes){
         $("#tabla").empty(); // Vaciar la tabla
         for (i = 0; i < mensajes.length; i++) {
@@ -72,25 +73,34 @@
                     "<td id="+mensajes[i].fecha.toString()+">"+"</td>"+
                     "<td>"+ "</td>"+
                     "<td>"+ "</td>"+
-                    "</td>"
+                    "</tr>"
                 );
             }
         }
     }
-
+    function decorado(){
+        $("#tituloAmigo").append(
+            "<h3 id=chatDe"+idAmigo+"> Chat de "+idAmigo+" </h3>"
+        );
+    }
     cargarMensajes();
+    decorado();
 
+    setInterval(function(){cargarMensajes(); }, 10000);
 
-    function enviarMensaje( _id ) {
+    function enviarMensaje() {
         $.ajax({
-            url: URLbase + "/mensaje/"+_id,
+            url: URLbase + "/mensaje/",
             type: "POST",
-            data: { },
+            data: {
+                destino : idAmigo,
+                texto : $("#textoMensaje").val()
+            },
             dataType: 'json',
             headers: { "token": token },
             success: function(respuesta) {
-                console.log("Mensaje a: "+_id);
-                $("#mensaje" ).empty();
+                $('[name="textoMensaje"]').val('');
+                cargarMensajes()
             },
             error : function (error){
                 $( "#contenedor-principal" ).load("widget-amigos.html");
