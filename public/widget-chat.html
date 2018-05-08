@@ -15,6 +15,12 @@
     </table>
 </div>
 
+<div id="enviar">
+    <input type="text" class="form-control" placeholder="Enviar mensaje..."
+           id="mensaje"/>
+    <button id="boton-login" class="btn btn-primary" onclick="enviarMensaje(_id)">Enviar</button>
+</div>
+
 <script>
     var mensajes;
     var usuarioSesion;
@@ -73,6 +79,24 @@
     }
 
     cargarMensajes();
+
+
+    function enviarMensaje( _id ) {
+        $.ajax({
+            url: URLbase + "/mensaje/"+_id,
+            type: "POST",
+            data: { },
+            dataType: 'json',
+            headers: { "token": token },
+            success: function(respuesta) {
+                console.log("Mensaje a: "+_id);
+                $("#mensaje" ).empty();
+            },
+            error : function (error){
+                $( "#contenedor-principal" ).load("widget-amigos.html");
+            }
+        });
+    }
 </script>
 
 </div>
