@@ -17,19 +17,19 @@ module.exports = function (app, swig, gestorBD) {
         //Comprobaciones de registro
         if(nombre == "")
             res.redirect("/registrarse" + "?mensaje=El nombre no puede estar vacio" + "&tipoMensaje=alert-danger");
-        if(apellidos == "")
+        else if(apellidos == "")
             res.redirect("/registrarse" + "?mensaje=Los apellidos no puedens estar vacio" + "&tipoMensaje=alert-danger");
-        if(password == "")
+        else if(password == "")
             res.redirect("/registrarse" + "?mensaje=La contraseña no puede estar vacia" + "&tipoMensaje=alert-danger");
-        if(password != repitepassword)
+        else if(password != repitepassword)
             res.redirect("/registrarse" + "?mensaje=Las contraseñas no coinciden" + "&tipoMensaje=alert-danger");
+        else {
 
+            //Fin comprobaciones
 
-        //Fin comprobaciones
-
-        //Comprobar que el email no existe en el sistema
-        var criterio = {}; //Obtendria todos los usuarios
-        gestorBD.obtenerUsuarios(criterio, function (usuarios) {
+            //Comprobar que el email no existe en el sistema
+            var criterio = {}; //Obtendria todos los usuarios
+            gestorBD.obtenerUsuarios(criterio, function (usuarios) {
                 for (i = 0; i < usuarios.length; i++) {
                     if (usuarios[i].email == email) {
                         res.redirect("/registrarse" + "?mensaje=Ya existe un usuario con ese email" + "&tipoMensaje=alert-danger");
@@ -44,10 +44,10 @@ module.exports = function (app, swig, gestorBD) {
                     apellidos: req.body.apellidos,
                     email: req.body.email,
                     password: seguro,
-                    role : "ROLE_USER"
+                    role: "ROLE_USER"
                 }
                 //Para hacer un admin a la guarra
-                if(usuario.email == "admin@correo.es"){
+                if (usuario.email == "admin@correo.es") {
                     usuario.role = "ROLE_ADMIN"
                 }
 
@@ -62,7 +62,8 @@ module.exports = function (app, swig, gestorBD) {
                         res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
                     }
                 });
-        });
+            });
+        }
     });
     app.get("/identificarse", function (req, res) {
         var respuesta = swig.renderFile('views/bidentificacion.html', {});

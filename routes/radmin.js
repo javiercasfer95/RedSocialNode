@@ -23,7 +23,7 @@ module.exports = function (app, swig, gestorBD) {
             usuario = {
                 nombre: nombres[itNames],
                 apellidos: apellidos[itNames],
-                email: nombres[itNames]+apellidos[itNames]+correos[itCorreos],
+                email: nombres[itNames]+apellidos[itNames]+"@"+correos[itCorreos],
                 password: seguro,
                 role : "ROLE_USER"
             }

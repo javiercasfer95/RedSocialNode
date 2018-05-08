@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         {% for peticion in peticiones %}
-        <tr id="fila">
+        <tr id="filaDe{{peticion.emisor}}">
             <td >{{ peticion.emisor }}</td>
             {% if !peticion.aceptada %}
             <td><a id="btn{{user.email}}" href="/peticion/aceptar/{{peticion.emisor}}"

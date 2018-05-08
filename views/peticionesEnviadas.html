@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         {% for peticion in peticiones %}
-        <tr id="fila">
+        <tr id="filaDe{{peticion.receptor}}">
             <td >{{ peticion.receptor }}</td>
             {% if peticion.aceptada %}
             <td><a id="'info{{user.email}}"
