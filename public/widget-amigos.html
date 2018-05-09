@@ -1,13 +1,12 @@
 <div id="widget-amigos" >
+
     <input type="text" class="form-control" placeholder="Filtrar por nombre"
            id="filtro-nombre"/>
 
-    <button class="btn btn-primary" onclick="widgetAgregar()">Nueva Canción</button>
-    <button class="btn" onclick="cargarCanciones()" >Actualizar</button>
     <table class="table table-hover">
         <thead>
         <tr>
-            <th><a onclick="ordenarPorNombre()">Nombre</a></th>
+            <th>Nombre</th>
             <th>Apellidos</th>
             <th>Email</th>
             <th class="col-md-1"></th>
@@ -42,12 +41,12 @@
         $( "#tablaCuerpo" ).empty(); // Vaciar la tabla
         for (i = 0; i < amigos.length; i++) {
             $( "#tablaCuerpo" ).append(
-                "<tr id="+amigos[i]._id+">"+
+                "<tr id=filaDe"+amigos[i].email+">"+
                 "<td>"+amigos[i].nombre+"</td>" +
                 "<td>"+amigos[i].apellidos+"</td>" +
                 "<td>"+amigos[i].email+"</td>" +
                 "<td>"+
-                "<a onclick=chat('"+amigos[i].email+"')>Chat</a><br>"+
+                "<a onclick=chat('"+amigos[i].email+"') id=chatDe"+amigos[i].email+">Chat</a><br>"+
                 "</td>"+
                 "</tr>" );
             // Mucho cuidado con las comillas del eliminarCancion
@@ -94,27 +93,30 @@
         actualizarTabla(cancionesFiltradas);
     });
 
-    var precioDsc = true;
-    function ordenarPorPrecio(){
-        if (precioDsc){
-            canciones.sort(function(a, b) {
-                return parseFloat(a.precio) - parseFloat(b.precio);
-            });
-        } else {
-            canciones.sort(function(a, b) {
-                return parseFloat(b.precio) - parseFloat(a.precio);
-            });
-        }
-        actualizarTabla(canciones);
-        precioDsc = !precioDsc; //invertir
-    }
 
-    function ordenarPorNombre(){
-        canciones.sort(function(a, b) {
-            if(a.nombre > b.nombre ) return 1;
-            if(a.nombre < b.nombre ) return -1;
-            return 0;
-        });
-        actualizarTabla(canciones);
-    }
+    $('#filtro-nombre').on('input',function(e){
+        var amigosFiltrados = [];
+        var nombreFiltro = $("#filtro-nombre").val();
+
+        for (i = 0; i < amigos.length; i++) {
+            if (amigos[i].nombre.indexOf(nombreFiltro) != -1 ){
+                amigosFiltrados.push(amigos[i]);
+            }
+        }
+        actualizarTabla(amigosFiltrados);
+    });
+
+    $('#filtro-nombre').on('input',function(e){
+        var cancionesFiltradas = [];
+        var nombreFiltro = $("#filtro-nombre").val();
+
+        for (i = 0; i < canciones.length; i++) {
+            if (canciones[i].nombre.indexOf(nombreFiltro) != -1 ){
+                cancionesFiltradas.push(canciones[i]);
+            }
+        }
+        actualizarTabla(cancionesFiltradas);
+    });
+
+
 </script>

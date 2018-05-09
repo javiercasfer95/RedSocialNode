@@ -15,13 +15,13 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" id="boton-login">Aceptar</button>
+            <button type="button" id="btLogin">Aceptar</button>
         </div>
     </div>
 </div>
 
 <script>
-    $("#boton-login").click(function(){
+    $("#btLogin").click(function(){
         $.ajax({
             url: URLbase + "/autenticar",
             type: "POST",

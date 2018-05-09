@@ -30,7 +30,9 @@
       </ul>
     </div>
   -->
+    <button id="logout" class="btn btn-primary">Desconectarse</button>
   </div>
+
 </nav>
 
 
@@ -50,6 +52,27 @@
           $( "#contenedor-principal" ).load( "widget-chat.html");
       }
 
+
+
+
+      $("#logout").click(function(){
+          $.ajax({
+              url: URLbase + "/desconectar",
+              type: "GET",
+              data: {
+                             },
+              dataType: 'json',
+              success: function(respuesta) {
+
+                  token = respuesta.token;
+                  $( "#contenedor-principal" ).load( "widget-login.html");
+              },
+              error : function (error){
+                  $("#contenedor-principal" )
+                      .prepend("<div class='alert alert-danger'>Error al desconectarse</div>");
+              }
+          });
+      });
   </script>
 
 </div>

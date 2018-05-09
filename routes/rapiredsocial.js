@@ -27,6 +27,19 @@ module.exports = function (app, gestorBD) {
         });
     });
 
+    app.get("/api/desconectar", function(req, res) {
+
+        var token = app.get('jwt').sign(
+            {usuario: null , tiempo: 0},
+            "secreto");
+
+                res.status(200);
+                res.json({
+                    autenticado: false,
+                    token : token
+                });
+    });
+
     app.get("/api/amigos", function(req, res) {
         var usuarioSesion = res.usuario;
 
