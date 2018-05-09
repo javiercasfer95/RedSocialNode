@@ -11,7 +11,7 @@ module.exports = function (app, swig, gestorBD) {
         var numUsers = 40;
         var usersList = [];
         var itNames;
-        var itCorreos;
+        var itCorreos = 0;
         var pass;
         var seguro;
         var usuario;
@@ -76,7 +76,7 @@ module.exports = function (app, swig, gestorBD) {
     }
 
     function crearUsuariosDefecto() {
-        var itCorreos;
+        var itCorreos = 0;
         var pass;
         var seguro;
         var usuario;
@@ -85,8 +85,6 @@ module.exports = function (app, swig, gestorBD) {
         seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(pass).digest('hex');
 
         for(i = 0; i < 9; i++){
-            itCorreos = Math.floor(Math.random() * 4); //Entre 0 y 3 para los correos
-
             usuario = {
                 nombre: nombres[i],
                 apellidos: apellidos[i],
@@ -96,6 +94,10 @@ module.exports = function (app, swig, gestorBD) {
             }
             if(!contains(usersList, usuario)){
                 usersList[i] = usuario;
+            }
+            itCorreos++;
+            if(itCorreos == correos.length){
+                itCorreos = 0;
             }
         }
 
@@ -127,6 +129,41 @@ module.exports = function (app, swig, gestorBD) {
             role : "ROLE_USER"
         }
         usersList[i+2] = usuario; //Aqui i = 10
+        usuario = {
+            nombre: "Noelia",
+            apellidos: "Perez",
+            email: "noelia@correo.es",
+            password: seguro,
+            role : "ROLE_USER"
+        }
+        usersList[i+3] = usuario; //Aqui i = 10
+        usuario = {
+            nombre: "Pepita",
+            apellidos: "Pelaez",
+            email: "pepita@correo.es",
+            password: seguro,
+            role : "ROLE_USER"
+        }
+        usersList[i+4] = usuario; //Aqui i = 10
+
+        usuario = {
+            nombre: "Ash",
+            apellidos: "Ketchup ",
+            email: "ash@correo.es",
+            password: seguro,
+            role : "ROLE_USER"
+        }
+        usersList[i+5] = usuario; //Aqui i = 10
+
+        usuario = {
+            nombre: "Palkia",
+            apellidos: "Dialga",
+            email: "pokemon@correo.es",
+            password: seguro,
+            role : "ROLE_USER"
+        }
+        usersList[i+6] = usuario; //Aqui i = 10
+
         return usersList;
     }
 
@@ -157,7 +194,7 @@ module.exports = function (app, swig, gestorBD) {
                             //res.send('Usuario Insertado ' + id);
                             //res.redirect("/home");
                             // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
-                            res.redirect("/identificarse?mensaje=Se ha reiniciado la base de datos.");
+                            res.redirect("/desconectarse?mensaje=Se ha reiniciado la base de datos.");
                         }
                     });
                 }

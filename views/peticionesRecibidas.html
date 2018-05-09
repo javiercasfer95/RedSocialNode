@@ -28,7 +28,7 @@
         <tr id="filaDe{{peticion.emisor}}">
             <td >{{ peticion.emisor }}</td>
             {% if !peticion.aceptada %}
-            <td><a id="btn{{peticion.emisor}}noaceptada" href="/peticion/aceptar/{{peticion.emisor}}"
+            <td><a id="btn{{peticion.emisor}}" href="/peticion/aceptar/{{peticion.emisor}}"
                    class="btn btn-primary">Aceptar a {{peticion.emisor}}</a>
             </td>
             {% else %}
