@@ -22,8 +22,8 @@
 </div>
 
 <div>
-    <button onclick="widgetAmigos()" class="btn" >Volver</button>
-    <button onclick="widgetChat()" class="btn" >Update</button>
+    <button onclick="widgetAmigos()" class="btn" id="btVolver" >Volver</button>
+    <button onclick="widgetChat()" class="btn" id="btUpdate" >Update</button>
 </div>
 
 <script>
@@ -46,6 +46,7 @@
                 colega = respuesta.colega;
                 mensajes = respuesta.mensajes;
                 actualizarTabla(mensajes);
+
             },
             error: function (error) {
                 $("#contenedor-principal").load("widget-login.html");
@@ -86,7 +87,15 @@
     cargarMensajes();
     decorado();
 
-    setInterval(function(){cargarMensajes(); }, 3500);
+
+
+    var timer = setInterval(cargarMensajes(),3500);
+
+    function widgetChat(){
+        clearInterval(timer);
+
+        $( "#contenedor-principal" ).load( "widget-chat.html");
+    }
 
     function enviarMensaje() {
         $.ajax({
