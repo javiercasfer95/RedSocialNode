@@ -88,7 +88,6 @@ module.exports = function (app, gestorBD) {
         var emisor = res.usuario;
         var texto = req.body.texto;
         var leido = false;
-
         var criterioA = {
             user1: emisor,
             user2: destino
@@ -97,9 +96,7 @@ module.exports = function (app, gestorBD) {
             user1: destino,
             user2: emisor
         }
-
         var criterio = { $or : [ criterioA, criterioB ]};
-
         //Priemero es ver si son amigos
         gestorBD.obtenerColegas(criterio, function (colegas) {
             if (colegas == null) {
@@ -119,7 +116,6 @@ module.exports = function (app, gestorBD) {
                     leido : false,
                     fecha : date
                 }
-
                 gestorBD.insertarMensaje(mensaje, function (id) {
                     if(id == null){
                         res.status(401)
@@ -191,20 +187,13 @@ module.exports = function (app, gestorBD) {
                 })
             } else {
                 res.status(200);
-                /*res.send(JSON.stringify({
-                    usuario : usuarioSesion,
-                    colega : colega,
-                    mensajes : mensajes
-                }));
-                */
-                var guarrada = {
+                var tmp = {
                     usuario : usuarioSesion,
                     colega : colega,
                     mensajes : mensajes
                 }
-                res.send(JSON.stringify(guarrada));
+                res.send(JSON.stringify(tmp));
 
-                //res.send(JSON.stringify(mensajes))
             }
         });
     });
