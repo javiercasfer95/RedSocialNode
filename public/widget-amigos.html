@@ -81,18 +81,6 @@
         $( "#contenedor-principal" ).load( "widget-agregar.html");
     }
 
-    $('#filtro-nombre').on('input',function(e){
-        var cancionesFiltradas = [];
-        var nombreFiltro = $("#filtro-nombre").val();
-
-        for (i = 0; i < canciones.length; i++) {
-            if (canciones[i].nombre.indexOf(nombreFiltro) != -1 ){
-                cancionesFiltradas.push(canciones[i]);
-            }
-        }
-        actualizarTabla(cancionesFiltradas);
-    });
-
 
     $('#filtro-nombre').on('input',function(e){
         var amigosFiltrados = [];
@@ -104,18 +92,6 @@
             }
         }
         actualizarTabla(amigosFiltrados);
-    });
-
-    $('#filtro-nombre').on('input',function(e){
-        var cancionesFiltradas = [];
-        var nombreFiltro = $("#filtro-nombre").val();
-
-        for (i = 0; i < canciones.length; i++) {
-            if (canciones[i].nombre.indexOf(nombreFiltro) != -1 ){
-                cancionesFiltradas.push(canciones[i]);
-            }
-        }
-        actualizarTabla(cancionesFiltradas);
     });
 
 
