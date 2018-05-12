@@ -132,6 +132,7 @@ app.set('port', 8081);
 app.set('db', 'mongodb://admin:sdi2018@ds055742.mlab.com:55742/redsocialnatornode');
 app.set('clave', 'abcdefg');
 app.set('crypto', crypto);
+app.set('loggerApp', loggerApp);
 
 //Rutas/controladores por lógica
 require("./routes/rhome.js")(app, swig); // (app, param1, param2, etc.)

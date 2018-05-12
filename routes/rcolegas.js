@@ -1,4 +1,6 @@
 module.exports = function (app, swig, gestorBD) {
+    var loggerApp = app.get("loggerApp");
+
     app.get("/amigos/lista", function (req, res) {
         var usuarioSesion = req.session.usuario.email;
 

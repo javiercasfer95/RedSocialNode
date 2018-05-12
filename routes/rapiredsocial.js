@@ -1,5 +1,5 @@
 module.exports = function (app, gestorBD) {
-
+    var loggerApp = app.get("loggerApp");
 
     app.post("/api/autenticar", function(req, res) {
         var seguro = app.get("crypto").createHmac('sha256', app.get('clave')).update(req.body.password).digest('hex');
