@@ -80,7 +80,6 @@ routerUsuarioToken.use(function(req, res, next) {
                 return;
 
             } else {
-
                 // dejamos correr la petición
                 res.usuario = infoToken.usuario;
                 next();
@@ -108,7 +107,6 @@ routerUsuarioSession.use(function (req, res, next) {
     //console.log("routerUsuarioSession")
     if (req.session.usuario) {
         // dejamos correr la petición
-
         next();
     } else {
         loggerApp.info("El usuario no está en sesión. Debe identificarse.")

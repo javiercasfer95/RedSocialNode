@@ -173,28 +173,28 @@ module.exports = function (app, swig, gestorBD) {
     app.get("/admin/dropDatabase", function (req, res) {
         var usuarioSesion = req.session.usuario;
         if(usuarioSesion.role != "ROLE_ADMIN"){
+            loggerApp.error("No eres un usuario administrador, " + usuarioSesion.email);
             res.redirect("/identificarse?mensaje=No tienes privilegios, listillo." + "&tipoMensaje=alert-danger");
         }
         else{
 
             gestorBD.restoreDatabase(function(result){
                 if(result == null){
+                    loggerApp.error("Error al borrar todo el contenido en la base de datos.")
                     res.redirect("/identificarse?mensaje=No se ha podido riniciar la base de datos." + "&tipoMensaje=alert-danger");
                 }
                 else{
                     var usersList = crearUsuariosDefecto();
-                    /*for(i=0; i < usersList.length(; i++)){
-
-                    }
-                    */
                     gestorBD.insertarManyUsuarios(usersList, function (id) {
                         if (id == null) {
                             //res.send("Error al insertar ");
+                            loggerApp.info("Se ha reiniciado la base de datos a valores por defecto.")
                             res.redirect("/registrarse?mensaje=Error al reiniciar");
                         } else {
                             //res.send('Usuario Insertado ' + id);
                             //res.redirect("/home");
                             // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
+                            loggerApp.error("No se ha podido insertar los valores por defecto en la base de datos. Por favor, crea el usuario con correo admin@correo.es y pass 123456 para reintentar.")
                             res.redirect("/desconectarse?mensaje=Se ha reiniciado la base de datos.");
                         }
                     });
@@ -208,12 +208,14 @@ module.exports = function (app, swig, gestorBD) {
     app.get("/admin/restoreDatabase", function (req, res) {
         var usuarioSesion = req.session.usuario;
         if(usuarioSesion.role != "ROLE_ADMIN"){
+            loggerApp.error("No eres un usuario administrador, " + usuarioSesion.email);
             res.redirect("/identificarse?mensaje=No tienes privilegios, listillo." + "&tipoMensaje=alert-danger");
         }
         else{
 
             gestorBD.restoreDatabase(function(result){
                 if(result == null){
+                    loggerApp.error("Error al borrar todo el contenido en la base de datos.")
                     res.redirect("/identificarse?mensaje=No se ha podido riniciar la base de datos." + "&tipoMensaje=alert-danger");
                 }
                 else{
@@ -228,11 +230,13 @@ module.exports = function (app, swig, gestorBD) {
                     gestorBD.insertarUsuario(adminuser, function (id) {
                         if (id == null) {
                             //res.send("Error al insertar ");
+                            loggerApp.info("Se ha reiniciado la base de datos a valores por defecto.")
                             res.redirect("/registrarse?mensaje=Error al registrar usuario")
                         } else {
                             //res.send('Usuario Insertado ' + id);
                             //res.redirect("/home");
                             // res.redirect("/listUsers?mensaje=Nuevo usuario registrado");
+                            loggerApp.error("No se ha podido insertar los valores por defecto en la base de datos. Por favor, crea el usuario con correo admin@correo.es y pass 123456 para reintentar.")
                             res.redirect("/identificarse?mensaje=Se ha reiniciado la base de datos.");
                         }
                     });
