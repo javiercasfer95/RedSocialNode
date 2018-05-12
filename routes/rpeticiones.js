@@ -1,4 +1,5 @@
 module.exports = function (app, swig, gestorBD) {
+    var loggerApp = app.get("loggerApp");
 
 
 
@@ -16,6 +17,8 @@ module.exports = function (app, swig, gestorBD) {
 
         gestorBD.obtenerPeticiones(criterio, function (peticiones, total) {
             if (peticiones == null) {
+                loggerApp.info("Error al listar peticiones recibidas.");
+
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.redirect("/listUsers" + "?mensaje=Error al buscar peticiones recibidas" + "&tipoMensaje=alert-danger ");
@@ -41,6 +44,8 @@ module.exports = function (app, swig, gestorBD) {
 
         gestorBD.obtenerPeticiones(criterio, function (peticiones) {
             if (peticiones == null) {
+                loggerApp.info("Error al listar peticiones enviadas.");
+
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 //res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
@@ -121,6 +126,7 @@ app.get('/peticion/aceptar/:emisor', function (req, res) {
              }
          }*/
         if (peticiones == null) {
+            loggerApp.info("Error al buscar la petición de"+emisor+".");
             res.redirect("/peticion/recibidas" + "?mensaje=Error al buscar la peticion de " + emisor + "." + "&tipoMensaje=alert-danger");
         }
 
