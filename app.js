@@ -2,6 +2,30 @@
 var express = require('express');
 var app = express();
 
+var log4js = require('log4js');
+log4js.configure({
+    appenders: {
+        out: { type: 'stdout' },
+        app: { type: 'file', filename: 'redsocialnatorLog.log' }
+    },
+    categories: {
+        default: { appenders: [ 'out', 'app' ], level: 'debug' }
+    }
+});
+
+//var loggerOut = log4js.getLogger('out');
+var loggerApp = log4js.getLogger('app');
+
+/*
+Como usar el logger
+logger.trace('Entering cheese testing');
+logger.debug('Got cheese.');
+logger.info('Cheese is Gouda.');
+logger.warn('Cheese is quite smelly.');
+logger.error('Cheese is too ripe!');
+logger.fatal('Cheese was breeding ground for listeria.');
+*/
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
@@ -121,7 +145,8 @@ app.get('/', function (req, res) {
 });
 
 app.use( function (err, req, res, next ) {
-    console.log("Error producido: " + err); //we log the error in our db
+    //console.log("Error producido: " + err); //we log the error in our db
+    loggerApp.error("Error producido: " + err);
     if (! res.headersSent) {
         res.status(400);
         res.send("Recurso no disponible");
@@ -131,6 +156,7 @@ app.use( function (err, req, res, next ) {
 //lanzar el servidor
 app.listen(app.get('port'), function () {
     console.log("Servidor activo");
+    loggerApp.info("Servidor iniciado.")
 });
 /*
 https.createServer({
