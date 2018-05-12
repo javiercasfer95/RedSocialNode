@@ -1,1 +1,33 @@
 [2018-05-12T16:07:22.389] [INFO] app - Servidor iniciado.
+[2018-05-12T16:15:45.775] [INFO] app - Servidor iniciado.
+[2018-05-12T16:16:02.226] [INFO] app - Usuario: admin@correo.es identificado.
+[2018-05-12T16:16:04.696] [ERROR] app - No se ha podido insertar los valores por defecto en la base de datos. Por favor, crea el usuario con correo admin@correo.es y pass 123456 para reintentar.
+[2018-05-12T16:16:15.709] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:16:20.821] [INFO] app - Error al identificarse.
+[2018-05-12T16:16:26.238] [INFO] app - Usuario: joni@correo.es identificado.
+[2018-05-12T16:16:28.037] [INFO] app - El usuario no está en sesión. Debe identificarse.
+[2018-05-12T16:16:31.405] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:16:37.525] [INFO] app - El usuario no está en sesión. Debe identificarse.
+[2018-05-12T16:16:40.791] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:16:52.015] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:17:04.341] [INFO] app - Usuario: noelia@correo.es identificado.
+[2018-05-12T16:17:10.657] [INFO] app - Usuario: noelia@correo.es identificado.
+[2018-05-12T16:17:18.365] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:17:25.316] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:17:47.556] [INFO] app - Usuario: ash@correo.es identificado.
+[2018-05-12T16:17:57.586] [INFO] app - Usuario: joni@correo.es identificado.
+[2018-05-12T16:18:07.704] [INFO] app - Usuario: pokemon@correo.es identificado.
+[2018-05-12T16:18:17.794] [INFO] app - Usuario: javier@correo.es identificado.
+[2018-05-12T16:18:24.510] [INFO] app - Usuario javier@correo.es autenticado correctamente.
+[2018-05-12T16:18:25.263] [INFO] app - El usuario javier@correo.es ha obtenido su lista de amigos.
+[2018-05-12T16:18:29.364] [ERROR] app - Error al obtener datos de usuarios para comprobar autenticacion
+[2018-05-12T16:18:34.104] [INFO] app - Usuario javier@correo.es autenticado correctamente.
+[2018-05-12T16:18:34.768] [INFO] app - El usuario javier@correo.es ha obtenido su lista de amigos.
+[2018-05-12T16:18:37.979] [INFO] app - Usuario javier@correo.es autenticado correctamente.
+[2018-05-12T16:18:38.638] [INFO] app - El usuario javier@correo.es ha obtenido su lista de amigos.
+[2018-05-12T16:18:41.820] [INFO] app - Usuario joni@correo.es autenticado correctamente.
+[2018-05-12T16:18:42.498] [INFO] app - El usuario joni@correo.es ha obtenido su lista de amigos.
+[2018-05-12T16:18:52.268] [INFO] app - Usuario javier@correo.es autenticado correctamente.
+[2018-05-12T16:18:52.943] [INFO] app - El usuario javier@correo.es ha obtenido su lista de amigos.
+[2018-05-12T16:18:57.804] [INFO] app - Usuario javier@correo.es autenticado correctamente.
+[2018-05-12T16:18:58.474] [INFO] app - El usuario javier@correo.es ha obtenido su lista de amigos.
