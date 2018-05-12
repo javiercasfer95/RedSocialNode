@@ -18,6 +18,7 @@ module.exports = function (app, swig, gestorBD) {
         //FIN QUERY
         gestorBD.obtenerColegasPg(criterio,pg, function (colegas, total) {
             if (colegas == null) {
+                loggerApp.error("Error al obtener los colegas de "+ usuarioSesion)
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.redirect("/listUsers" + "?mensaje=Error al buscar colegas." + "&tipoMensaje=alert-danger ");
@@ -36,6 +37,7 @@ module.exports = function (app, swig, gestorBD) {
 
                 gestorBD.obtenerUsuarios(criterio, function (usuarios) {
                     if(usuarios == null){
+                        loggerApp.error("Error al obtener la informacion de los colegas de "+ usuarioSesion)
                         res.redirect("/listUsers" + "?mensaje=Error al buscar colegas" + "&tipoMensaje=alert-danger ");
                     }else{
                         var respuesta = swig.renderFile('views/listaColegas.html', {

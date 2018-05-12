@@ -10,6 +10,7 @@ module.exports = function (app, gestorBD) {
         }
         gestorBD.obtenerUsuarios(criterio, function(usuarios) {
             if (usuarios == null || usuarios.length == 0) {
+                loggerApp.error("Error al obtener datos de usuarios para comprobar autenticacion")
                 res.status(401);
                 res.json({
                     autenticado : false
@@ -18,6 +19,7 @@ module.exports = function (app, gestorBD) {
                 var token = app.get('jwt').sign(
                     {usuario: criterio.email , tiempo: Date.now()/1000},
                     "secreto");
+                loggerApp.info("Usuario "+ criterio.email +" autenticado correctamente.")
                 res.status(200);
                 res.json({
                     autenticado: true,
@@ -32,7 +34,7 @@ module.exports = function (app, gestorBD) {
         var token = app.get('jwt').sign(
             {usuario: null , tiempo: 0},
             "secreto");
-
+        loggerApp.info("Desconectado correctamente.")
                 res.status(200);
                 res.json({
                     autenticado: false,
@@ -52,6 +54,7 @@ module.exports = function (app, gestorBD) {
             if (colegas == null) {
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
+                loggerApp.error("Error al obtener la informacion de los amigos")
                 res.status(401);
                 res.json({
                     error : "Error al buscar colegas en la base de datos."
@@ -70,11 +73,13 @@ module.exports = function (app, gestorBD) {
 
                 gestorBD.obtenerUsuarios(criterio, function (usuarios) {
                     if(usuarios == null){
+                        loggerApp.error("Error al obtener los datos de los usuarios amigos")
                         res.satatus(401)
                         res.json({
                             error : "Error al encontrar los usuarios que son tus amigos."
                         })
                     }else{
+                        loggerApp.info("El usuario "+usuarioSesion+" ha obtenido su lista de amigos.")
                         res.status(200);
                         res.send(JSON.stringify(usuarios));
                     }
@@ -100,11 +105,13 @@ module.exports = function (app, gestorBD) {
         //Priemero es ver si son amigos
         gestorBD.obtenerColegas(criterio, function (colegas) {
             if (colegas == null) {
+                loggerApp.error("No se han encontrado amigos de "+emisor)
                 res.status(401);
                 res.json({
                     error : "Error al buscar colegas en la base de datos."
                 })
             }else if(colegas.length == 0){
+                loggerApp.error("El usuario "+emisor+" no tiene amigos con los que chatear.")
                 res.status(401);
                 res.json({ error : "No se puede enviar el mensaje ya que no sois amigos."})
             } else {
@@ -149,11 +156,13 @@ module.exports = function (app, gestorBD) {
         gestorBD.modificarMensaje(criterio, mensaje, function (id) {
             if (id == null) {
                 //res.send("Error al insertar ");
+                loggerApp.error("No se puede modificar el mensaje.")
                 res.status(401);
                 res.json({
                     error : "Error al marcar como leido el mensaje."
                 })
             } else {
+                loggerApp.info("El mensaje "+ idmensaje + " se ha marcado como leido.")
                 res.status(200)
                 res.json({
                     msn : "Mensaje marcado como leido."
@@ -179,6 +188,7 @@ module.exports = function (app, gestorBD) {
 
         gestorBD.obtenerMensajes(criterio, function (mensajes) {
             if (mensajes == null) {
+                loggerApp.error("No se ha podido obtener los mensajes entre "+usuarioSesion+" y "+colega)
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.status(401);
