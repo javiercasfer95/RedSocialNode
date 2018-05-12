@@ -70,17 +70,17 @@ routerUsuarioToken.use(function(req, res, next) {
         // verificar el token
         jwt.verify(token, 'secreto', function(err, infoToken) {
             if (err || (Date.now()/1000 - infoToken.tiempo) > caducidadSeg ){
-                loggerApp.info("Token inálida. El usuario "+infoToken.usuario+" se tiene que identificar.")
+                loggerApp.info("Token inválido. El usuario "+infoToken.usuario+" se tiene que identificar.")
                 res.status(403); // Forbidden
                 res.json({
                     acceso : false,
-                    error: 'Token invalido o caducado'
+                    error: 'Token inválido o caducado'
                 });
                 // También podríamos comprobar que intoToken.usuario existe
                 return;
 
             } else {
-                loggerApp.info("Token válida.")
+
                 // dejamos correr la petición
                 res.usuario = infoToken.usuario;
                 next();

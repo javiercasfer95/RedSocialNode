@@ -1,4 +1,5 @@
 module.exports = function (app, swig, gestorBD) {
+    var loggerApp = app.get("loggerApp");
     app.get("/usuarios", function (req, res) {
         res.send("ver usuarios")
     });
@@ -38,6 +39,8 @@ module.exports = function (app, swig, gestorBD) {
                     }
                 }
                 if(existeMail) {
+                    loggerApp.info("Error al crear usuario. Ya existe un usuario con ese email.");
+
                     res.redirect("/registrarse" + "?mensaje=Ya existe un usuario con ese email" + "&tipoMensaje=alert-danger");
                 }else{
                     var pass = req.body.password.toString();
@@ -57,6 +60,8 @@ module.exports = function (app, swig, gestorBD) {
 
                     gestorBD.insertarUsuario(usuario, function (id) {
                         if (id == null) {
+                            loggerApp.info("Error al crear usuario.");
+
                             //res.send("Error al insertar ");
                             res.redirect("/registrarse?mensaje=Error al registrar usuario")
                         } else {
@@ -87,13 +92,14 @@ module.exports = function (app, swig, gestorBD) {
 
         gestorBD.obtenerUsuarios(criterio, function (usuarios) {
             if (usuarios == null || usuarios.length == 0) {
+                loggerApp.info("Error al identificarse.");
                 req.session.usuario = null;
                 //res.send("No identificado: ");
                 res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
             } else {
                 req.session.usuario = usuarios[0];
                 //res.send("identificado");
-
+                loggerApp.info("Usuario: "+criterio.email+" identificado.");
                 //Mejoramos la respuesta de la identificacion
                 res.redirect("/listUsers" + "?mensaje=Bienvenido" + "&tipoMensaje=alert-success");
             }
@@ -127,6 +133,7 @@ module.exports = function (app, swig, gestorBD) {
 
         gestorBD.obtenerUsuariosPg(criterio, pg, function (usuarios, total) {
             if (usuarios == null || usuarios.length == 0) {
+                loggerApp.info("Error al listar usuarios.");
                 //req.session.usuario = null;
                 //res.send("No identificado: ");
                 //res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
@@ -190,6 +197,8 @@ module.exports = function (app, swig, gestorBD) {
 
         gestorBD.obtenerMensajes(criterio, function (mensajes) {
             if (mensajes == null) {
+                loggerApp.info("Error al listar mensajes de"+emisor+".");
+
                 res.redirect("/chat" + "?mensaje=Error al buscar los mensajes de" + emisor + "." + "&tipoMensaje=alert-danger");
             }else{
                 var respuesta = swig.renderFile('views/chat.html', {

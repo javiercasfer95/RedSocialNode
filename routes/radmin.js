@@ -1,4 +1,5 @@
 module.exports = function (app, swig, gestorBD) {
+    var loggerApp = app.get("loggerApp");
 
     var nombres = ["Juan", "Pepita", "Mario", "Link", "Zelda", "Pikachu", "Ash", "Samus", "Snoop" ];
 
