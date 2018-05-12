@@ -70,6 +70,7 @@ routerUsuarioToken.use(function(req, res, next) {
         // verificar el token
         jwt.verify(token, 'secreto', function(err, infoToken) {
             if (err || (Date.now()/1000 - infoToken.tiempo) > caducidadSeg ){
+                loggerApp.info("Token inálida. El usuario "+infoToken.usuario+" se tiene que identificar.")
                 res.status(403); // Forbidden
                 res.json({
                     acceso : false,
@@ -79,6 +80,7 @@ routerUsuarioToken.use(function(req, res, next) {
                 return;
 
             } else {
+                loggerApp.info("Token válida.")
                 // dejamos correr la petición
                 res.usuario = infoToken.usuario;
                 next();
@@ -86,6 +88,7 @@ routerUsuarioToken.use(function(req, res, next) {
         });
 
     } else {
+        loggerApp.info("Intento de acceso sin token establecido.")
         res.status(403); // Forbidden
         res.json({
             acceso : false,
@@ -105,8 +108,10 @@ routerUsuarioSession.use(function (req, res, next) {
     //console.log("routerUsuarioSession")
     if (req.session.usuario) {
         // dejamos correr la petición
+
         next();
     } else {
+        loggerApp.info("El usuario no está en sesión. Debe identificarse.")
         //console.log("va a : " + req.session.destino)
         res.redirect("/identificarse");
     }
